@@ -12,7 +12,7 @@
     <RootPath />
     <RootNamespace>RWPerformanceDB</RootNamespace>
     <AssemblyName>RWPerformanceDB</AssemblyName>
-    <ModelCollation>1033, CI</ModelCollation>
+    <ModelCollation>1033,CS</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -21,6 +21,7 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>Latin1_General_100_CS_AS</DefaultCollation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -63,5 +64,8 @@
     <Build Include="Files\SqlFileRW.sql" />
     <Build Include="Tables\Staging.sql" />
     <Build Include="Tables\Store.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RWPerformanceDBSingleFile.publish.xml" />
   </ItemGroup>
 </Project>
