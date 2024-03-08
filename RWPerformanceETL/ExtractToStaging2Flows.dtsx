@@ -1,0 +1,2338 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/2/2024 3:00:15 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L1_GP"
+  DTS:CreatorName="L1_GP\Peter"
+  DTS:DTSID="{8861C99A-F9EB-4C41-8553-56ED7B427F5D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="8192"
+  DTS:ObjectName="ExtractToStaging2Flows"
+  DTS:PackageType="5"
+  DTS:VersionBuild="115"
+  DTS:VersionGUID="{4079B5C8-3534-4D1A-BAA9-E743A23886E3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM - Configuration]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7C1F6E93-963D-4784-ABBB-884D019BCE0D}"
+      DTS:ObjectName="CM - Configuration">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\TESTPETER;Initial Catalog=Configuration;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Extract-{7C1F6E93-963D-4784-ABBB-884D019BCE0D}Localhost\TestPeter.Configuration;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM - Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+      DTS:ObjectName="CM - Database">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[$Package::ServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\TESTPETER;Initial Catalog=RWPerformanceDB;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Extract-{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}localhost\TESTPETER.RWPerformanceDBSingleFile;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[FF_CM - Performance]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{9C4D1B37-3AA8-4A15-8FCE-34D8D2D044D7}"
+      DTS:ObjectName="FF_CM - Performance">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="8192"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="C:\Testfiles\Performance.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="BufferSize"
+              DTS:DTSID="{7C58C035-DFBA-4498-9DD6-BCD82572C662}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="event"
+              DTS:DTSID="{8ADBDE48-0385-43C2-A888-750C4B8AF440}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="source"
+              DTS:DTSID="{DBDC4F10-584B-4D98-BED7-3E2A78C9AE8C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="StartTime"
+              DTS:DTSID="{98FD8C97-E3EC-4B5C-86D4-51F9DE6BE59C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Iteration"
+              DTS:DTSID="{E4C3E8E8-9E19-4248-8532-E14B9FE63BC6}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="FinishTime"
+              DTS:DTSID="{64274D47-0F9C-4A72-9321-DE48A46D71FD}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Throughputtime"
+              DTS:DTSID="{AF0E10B8-236B-46AC-B21A-A09CCB3A609B}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[FF_CM - Source]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{72F51076-FAD6-48F6-80A9-1AB8AD1673CB}"
+      DTS:ObjectName="FF_CM - Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="8192"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="C:\Testfiles\Test.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:DataType="20"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 0"
+              DTS:DTSID="{5192BDC5-5214-4253-8531-BDD081A921E4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="500"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 1"
+              DTS:DTSID="{5F572999-494C-4C28-A22A-58C203695F4A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="500"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 2"
+              DTS:DTSID="{70513C41-C6D6-4CBA-986C-1955ACC8B79C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="500"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 3"
+              DTS:DTSID="{3051A9E2-ABE0-4AB6-9DC9-303733874323}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="500"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 4"
+              DTS:DTSID="{B554D212-7BA0-4665-9A06-D6E41B917DD8}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:LogProviders>
+    <DTS:LogProvider
+      DTS:ConfigString="CM - Database"
+      DTS:CreationName="Microsoft.LogProviderSQLServer"
+      DTS:Description="Writes log entries for events to a SQL Server database"
+      DTS:DTSID="{82EE63B0-A857-4954-9447-07307B64EE6F}"
+      DTS:ObjectName="SSIS log provider for SQL Server">
+      <DTS:ObjectData>
+        <InnerObject />
+      </DTS:ObjectData>
+    </DTS:LogProvider>
+  </DTS:LogProviders>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{51100241-A2AB-4A78-AAE8-73A8406EB8E1}"
+      DTS:ObjectName="ServerName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">localhost\TESTPETER</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7F705EBF-7B80-4E01-8D67-82223BCD44AB}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="BufferSize">
+      <DTS:VariableValue
+        DTS:DataType="3">1000</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{659F292C-D516-4D42-89FC-370762ED38B9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="BufferSizes">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BB5D6EB1-B2D2-47D2-9BE5-69EB06AEFC96}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Monitoring_Enabled">
+      <DTS:VariableValue
+        DTS:DataType="11">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{73693651-4DA9-409B-A3ED-794D78F37771}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;C:\\Testfiles\\EE_WaitStats_&quot; +  (DT_WSTR, 15) @[User::BufferSize]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Monitoring_File_Name">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Testfiles\EE_WaitStats_1000</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0958FCC0-BA3C-43CC-B5DB-21A199F527B8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Number_Of_Iterations">
+      <DTS:VariableValue
+        DTS:DataType="3">10</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D29B6A73-E8CE-40CF-889B-3AD3BDC0D7C3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Row_Count">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{322A32D9-3C18-4D55-8E20-8EE2BEFC8EED}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Session_ID">
+      <DTS:VariableValue
+        DTS:DataType="2">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D3A8B824-0053-4461-B529-716CC992B78C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Create_IX_Staging">
+      <DTS:VariableValue
+        DTS:DataType="8">CREATE UNIQUE CLUSTERED INDEX IX_STAGING ON [dbo].[Staging] ([Id] ASC) ON [FileGroupStaging]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D5890048-C690-4F3B-8558-EC8970006770}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;CREATE EVENT SESSION MonitorWaits ON SERVER ADD EVENT sqlos.wait_info (WHERE sqlserver.session_id = &quot; + (DT_WSTR, 2) @Session_ID + &quot;)  ADD TARGET package0.asynchronous_file_target (SET FILENAME = N'&quot; + @Monitoring_File_Name + &quot;.xel', METADATAFILE = N'&quot; + @Monitoring_File_Name + &quot;.xem')&#xA;&#x9; WITH (max_dispatch_latency = 1 seconds);&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Create_Monitoring_Session">
+      <DTS:VariableValue
+        DTS:DataType="8">CREATE EVENT SESSION MonitorWaits ON SERVER ADD EVENT sqlos.wait_info (WHERE sqlserver.session_id = 0)  ADD TARGET package0.asynchronous_file_target (SET FILENAME = N'C:\Testfiles\EE_WaitStats_1000.xel', METADATAFILE = N'C:\Testfiles\EE_WaitStats_1000.xem')
+	 WITH (max_dispatch_latency = 1 seconds);</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F98965DE-431D-4805-9BFE-834C92BF7FC5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Drop_IX_Staging">
+      <DTS:VariableValue
+        DTS:DataType="8">DROP INDEX IF EXISTS IX_STAGING ON [dbo].[Staging]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{26DD7003-55B8-4F6D-8417-E0BDF7665FBE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Drop_Monitoring_Session">
+      <DTS:VariableValue
+        DTS:DataType="8">IF EXISTS (SELECT * FROM sys.server_event_sessions WHERE name = 'MonitorWaits')     DROP EVENT SESSION MonitorWaits ON SERVER </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2C1F5991-1C03-46EE-8C20-6B76E6040D85}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Get_BufferSizes">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT [BufferSize] FROM [BufferSizes] ORDER BY [BufferSize] ASC</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C57CCC5D-5EEE-4A0E-91CB-2C926FE01054}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Get_Iterations">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT CONVERT(INT, [Value]) AS [Value] FROM [Configuration].[dbo].[Configuration] C WHERE C.Parameter = 'NumberOfIterations'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7E13AB85-06A4-4BDB-8B9B-8DE5F00650DE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Get_Monitoring_Bit">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT C.[Value]  FROM Configuration C WHERE C.[Parameter] = 'MonitorSession'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4FA1A7A3-646E-4BAE-BEFD-76235A233DC1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Get_Performance">
+      <DTS:VariableValue
+        DTS:DataType="8">WITH Events AS ( 	SELECT  		L.[event] 		, L.[source] 		, L.[starttime] 		, ROW_NUMBER() OVER (PARTITION BY L.[event], L.[source] ORDER BY L.[starttime] ASC) AS Iteration 	FROM [dbo].[sysssislog] L )  , Iterations AS ( 	SELECT 		B.[BufferSize] 		, ROW_NUMBER() OVER (ORDER BY B.[BufferSize] ASC) AS IterationNumber 	FROM [Configuration].[dbo].[BufferSizes] B )  SELECT  	I.BufferSize 	, EStart.[event] 	, EStart.[source] 	, EStart.[starttime] AS StartTime 	, EStart.[Iteration] 	, EFinish.[starttime] AS FinishTime 	, DATEDIFF(SECOND, EStart.[starttime], EFinish.[starttime]) AS Throughputtime FROM Events EStart INNER JOIN Events [EFinish] 	ON EStart.[Iteration] = EFinish.[Iteration] 	AND EStart.[source] = EFinish.[source] INNER JOIN Iterations I 	ON I.IterationNumber = (EStart.Iteration + 1) / (SELECT CONVERT(INT, [Value]) AS [Value] FROM [Configuration].[dbo].[Configuration] C WHERE C.Parameter = 'NumberOfIterations') WHERE EStart.[event] = 'OnPreExecute' AND EFinish.[event] = 'OnPostExecute'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F07DCB52-B171-49A8-8610-6CA92906CC8B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Get_Session_ID">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT @@SPID</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CFE79C16-74CB-4194-855A-C13566627F04}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Monitoring_Enabled]  ? @[User::SQL_Load_With_Monitoring]  :  @[User::SQL_Load_Without_Monitoring]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Load">
+      <DTS:VariableValue
+        DTS:DataType="8">UPDATE STATISTICS [dbo].[Staging] WITH FULLSCAN ;     INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BD2C5E30-FFEF-4182-B56F-534B3C612087}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Load_Without_Monitoring">
+      <DTS:VariableValue
+        DTS:DataType="8">UPDATE STATISTICS [dbo].[Staging] WITH FULLSCAN ;     INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{68EE443A-8156-40A6-A35F-B6B242B48335}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Load_With_Monitoring">
+      <DTS:VariableValue
+        DTS:DataType="8">UPDATE STATISTICS [dbo].[Staging] WITH FULLSCAN ;     ALTER EVENT SESSION MonitorWaits ON SERVER STATE = START    INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]     ALTER EVENT SESSION MonitorWaits ON SERVER STATE = STOP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F70F5A31-364B-4A57-8C49-D3F17F4CEB41}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Start_Monitoring">
+      <DTS:VariableValue
+        DTS:DataType="8">ALTER EVENT SESSION MonitorWaits ON SERVER STATE = START; GO</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C591AD4D-31F4-41D6-9CA4-1642AC8441B2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Truncate">
+      <DTS:VariableValue
+        DTS:DataType="8">TRUNCATE TABLE [dbo].[Staging] TRUNCATE TABLE [dbo].[Store]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6139688C-FB8A-4E28-B9BB-204EE8D3D66B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Truncate_SSYSLOG">
+      <DTS:VariableValue
+        DTS:DataType="8">TRUNCATE TABLE [dbo].[sysssislog]</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:LoggingOptions
+    DTS:FilterKind="0"
+    DTS:LoggingMode="1">
+    <DTS:Property
+      DTS:DataType="8"
+      DTS:Name="EventFilter">2,13,OnPostExecute,12,OnPreExecute</DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPostExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPreExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:SelectedLogProviders>
+      <DTS:SelectedLogProvider
+        DTS:InstanceID="{82EE63B0-A857-4954-9447-07307B64EE6F}" />
+    </DTS:SelectedLogProviders>
+  </DTS:LoggingOptions>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT - Export Performance"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{FF6721F8-AFDC-4C92-A642-2F6AEFD96A1D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT - Export Performance"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferMaxRows="100000"
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT - Export Performance\FFD - Performance"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="8192"
+              name="FFD - Performance"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Export Performance\FFD - Performance.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[FF_CM - Performance]"
+                  connectionManagerRefId="Package.ConnectionManagers[FF_CM - Performance]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[BufferSize]"
+                      cachedDataType="i4"
+                      cachedName="BufferSize"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[BufferSize]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[BufferSize]" />
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[event]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="event"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[event]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[event]" />
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[source]"
+                      cachedDataType="wstr"
+                      cachedLength="1024"
+                      cachedName="source"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[source]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[source]" />
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[StartTime]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="StartTime"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[StartTime]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[StartTime]" />
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[Iteration]"
+                      cachedDataType="i8"
+                      cachedName="Iteration"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[Iteration]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[Iteration]" />
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[FinishTime]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="FinishTime"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[FinishTime]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[FinishTime]" />
+                    <inputColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].Columns[Throughputtime]"
+                      cachedDataType="i4"
+                      cachedName="Throughputtime"
+                      externalMetadataColumnId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[Throughputtime]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[Throughputtime]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[BufferSize]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="BufferSize" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[event]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="event" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[source]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[StartTime]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="StartTime" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[Iteration]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="Iteration" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[FinishTime]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="FinishTime" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input].ExternalColumns[Throughputtime]"
+                      codePage="65001"
+                      dataType="str"
+                      length="50"
+                      name="Throughputtime" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SQL SRC - SSYSLog Performance"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable">User::SQL_Get_Performance</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CM - Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[CM - Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[BufferSize]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[BufferSize]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[BufferSize]"
+                      name="BufferSize"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[event]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[event]"
+                      length="128"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[event]"
+                      name="event"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[source]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      length="1024"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[source]"
+                      name="source"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[StartTime]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[StartTime]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[StartTime]"
+                      name="StartTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[Iteration]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[Iteration]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[Iteration]"
+                      name="Iteration"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[FinishTime]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[FinishTime]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[FinishTime]"
+                      name="FinishTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[Throughputtime]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[Throughputtime]"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].Columns[Throughputtime]"
+                      name="Throughputtime"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[BufferSize]"
+                      dataType="i4"
+                      name="BufferSize" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[event]"
+                      dataType="wstr"
+                      length="128"
+                      name="event" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[source]"
+                      dataType="wstr"
+                      length="1024"
+                      name="source" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[StartTime]"
+                      dataType="dbTimeStamp"
+                      name="StartTime" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[Iteration]"
+                      dataType="i8"
+                      name="Iteration" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[FinishTime]"
+                      dataType="dbTimeStamp"
+                      name="FinishTime" />
+                    <externalMetadataColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output].ExternalColumns[Throughputtime]"
+                      dataType="i4"
+                      name="Throughputtime" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[BufferSize]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[BufferSize]"
+                      name="BufferSize" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[event]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[event]"
+                      name="event" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[source]"
+                      dataType="wstr"
+                      length="1024"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[source]"
+                      name="source" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[StartTime]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[StartTime]"
+                      name="StartTime" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[Iteration]"
+                      dataType="i8"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[Iteration]"
+                      name="Iteration" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[FinishTime]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[FinishTime]"
+                      name="FinishTime" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[Throughputtime]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[Throughputtime]"
+                      name="Throughputtime" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT - Export Performance.Paths[OLE DB Source Output]"
+              endId="Package\DFT - Export Performance\FFD - Performance.Inputs[Flat File Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\FELC - Iterate buffersizes"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{01C4B3B6-D3C7-4147-9228-A1D915D6C34F}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="FELC - Iterate buffersizes">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{47AF1631-C107-435E-A871-0979D1F51050}"
+        DTS:ObjectName="{47AF1631-C107-435E-A871-0979D1F51050}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::BufferSizes" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations"
+          DTS:AssignExpression="@[User::Number_Of_Iterations] = @[User::Number_Of_Iterations] - 1"
+          DTS:CreationName="STOCK:FORLOOP"
+          DTS:Description="For Loop Container"
+          DTS:DTSID="{DA64F9B1-EA5B-401C-899C-96E7AE41A761}"
+          DTS:EvalExpression="@[User::Number_Of_Iterations] &gt; 0"
+          DTS:ExecutableType="STOCK:FORLOOP"
+          DTS:LocaleID="-1"
+          DTS:MaxConcurrent="1"
+          DTS:ObjectName="FLC - Iterations">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract"
+              DTS:CreationName="Microsoft.Pipeline"
+              DTS:Description="Data Flow Task"
+              DTS:DTSID="{FB1F17EF-B602-4E19-97AB-9F18C9F17510}"
+              DTS:ExecutableType="Microsoft.Pipeline"
+              DTS:LocaleID="8192"
+              DTS:ObjectName="DFT - Extract"
+              DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:PropertyExpression
+                DTS:Name="DefaultBufferMaxRows">@[User::BufferSize]</DTS:PropertyExpression>
+              <DTS:ObjectData>
+                <pipeline
+                  autoAdjustBufferSize="true"
+                  defaultBufferMaxRows="1000"
+                  version="1">
+                  <components>
+                    <component
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging"
+                      componentClassID="Microsoft.BDD"
+                      contactInfo="Balanced Data Distributor;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                      description="Evaluates and directs rows in a dataset to multiple destinations."
+                      name="BDD - Staging">
+                      <inputs>
+                        <input
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Inputs[Balanced Data Distributor Input]"
+                          description="Input to the Balanced Data      Distributor Transformation"
+                          name="Balanced Data Distributor Input">
+                          <externalMetadataColumns />
+                        </input>
+                      </inputs>
+                      <outputs>
+                        <output
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Outputs[Balanced Data Distributor Output 1]"
+                          deleteOutputOnPathDetached="true"
+                          exclusionGroup="1"
+                          name="Balanced Data Distributor Output 1"
+                          synchronousInputId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Inputs[Balanced Data Distributor Input]">
+                          <externalMetadataColumns />
+                        </output>
+                        <output
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Outputs[Balanced Data Distributor Output 2]"
+                          deleteOutputOnPathDetached="true"
+                          exclusionGroup="1"
+                          name="Balanced Data Distributor Output 2"
+                          synchronousInputId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Inputs[Balanced Data Distributor Input]">
+                          <externalMetadataColumns />
+                        </output>
+                        <output
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Outputs[Balanced Data Distributor Output 3]"
+                          dangling="true"
+                          deleteOutputOnPathDetached="true"
+                          exclusionGroup="1"
+                          name="Balanced Data Distributor Output 3"
+                          synchronousInputId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Inputs[Balanced Data Distributor Input]">
+                          <externalMetadataColumns />
+                        </output>
+                      </outputs>
+                    </component>
+                    <component
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile"
+                      componentClassID="Microsoft.FlatFileSource"
+                      contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                      description="Flat File Source"
+                      localeId="8192"
+                      name="FF_SRC - Testfile"
+                      usesDispositions="true"
+                      version="1">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies whether zero-length columns are treated as null."
+                          name="RetainNulls">false</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                          name="FileNameColumnName"></property>
+                      </properties>
+                      <connections>
+                        <connection
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Connections[FlatFileConnection]"
+                          connectionManagerID="Package.ConnectionManagers[FF_CM - Source]"
+                          connectionManagerRefId="Package.ConnectionManagers[FF_CM - Source]"
+                          name="FlatFileConnection" />
+                      </connections>
+                      <outputs>
+                        <output
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output]"
+                          name="Flat File Source Output">
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 0]"
+                              dataType="i8"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 0]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 0]"
+                              name="Column 0"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the data is in binary format."
+                                  name="UseBinaryFormat">false</property>
+                              </properties>
+                            </outputColumn>
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 1]"
+                              dataType="wstr"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 1]"
+                              length="500"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 1]"
+                              name="Column 1"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the data is in binary format."
+                                  name="UseBinaryFormat">false</property>
+                              </properties>
+                            </outputColumn>
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 2]"
+                              dataType="wstr"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 2]"
+                              length="500"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 2]"
+                              name="Column 2"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the data is in binary format."
+                                  name="UseBinaryFormat">false</property>
+                              </properties>
+                            </outputColumn>
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 3]"
+                              dataType="wstr"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 3]"
+                              length="500"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 3]"
+                              name="Column 3"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the data is in binary format."
+                                  name="UseBinaryFormat">false</property>
+                              </properties>
+                            </outputColumn>
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 4]"
+                              dataType="wstr"
+                              errorOrTruncationOperation="Conversion"
+                              errorRowDisposition="FailComponent"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 4]"
+                              length="500"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 4]"
+                              name="Column 4"
+                              truncationRowDisposition="FailComponent">
+                              <properties>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                                  name="FastParse">false</property>
+                                <property
+                                  dataType="System.Boolean"
+                                  description="Indicates whether the data is in binary format."
+                                  name="UseBinaryFormat">false</property>
+                              </properties>
+                            </outputColumn>
+                          </outputColumns>
+                          <externalMetadataColumns
+                            isUsed="True">
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 0]"
+                              dataType="i8"
+                              name="Column 0" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 1]"
+                              dataType="wstr"
+                              length="500"
+                              name="Column 1" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 2]"
+                              dataType="wstr"
+                              length="500"
+                              name="Column 2" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 3]"
+                              dataType="wstr"
+                              length="500"
+                              name="Column 3" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].ExternalColumns[Column 4]"
+                              dataType="wstr"
+                              length="500"
+                              name="Column 4" />
+                          </externalMetadataColumns>
+                        </output>
+                        <output
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output]"
+                          isErrorOut="true"
+                          name="Flat File Source Error Output">
+                          <outputColumns>
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                              codePage="65001"
+                              dataType="text"
+                              description="Flat File Source Error Output Column"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                              name="Flat File Source Error Output Column" />
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                              dataType="i4"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                              name="ErrorCode"
+                              specialFlags="1" />
+                            <outputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                              dataType="i4"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                              name="ErrorColumn"
+                              specialFlags="2" />
+                          </outputColumns>
+                          <externalMetadataColumns />
+                        </output>
+                      </outputs>
+                    </component>
+                    <component
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1"
+                      componentClassID="Microsoft.SQLServerDestination"
+                      contactInfo="SQL Server Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;5"
+                      description="SQL Server Destination"
+                      name="SQL_DST - Staging 1"
+                      version="5">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the column code page to use when code page information is unavailable from the data source."
+                          name="DefaultCodePage">1252</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Forces the use of the DefaultCodePage property value when describing character data."
+                          name="AlwaysUseDefaultCodePage">false</property>
+                        <property
+                          dataType="System.String"
+                          description="The name of the database object to copy data into."
+                          expressionType="Notify"
+                          name="BulkInsertTableName">[dbo].[Staging]</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies that any constraints on the destination object are checked during the data copy operation. Corresponds to the bulk insert CHECK_CONSTRAINTS option."
+                          name="BulkInsertCheckConstraints">false</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the number of the first row to copy. Corresponds to the bulk insert FIRSTROW option."
+                          expressionType="Notify"
+                          name="BulkInsertFirstRow">-1</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies that any insert triggers defined on the destination object will execute during the data copy. Corresponds to the bulk insert FIRE_TRIGGERS option."
+                          name="BulkInsertFireTriggers">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Corresponds to the bulk insert KEEPIDENTITY option."
+                          name="BulkInsertKeepIdentity">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the columns containing null will have null copied to the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                          name="BulkInsertKeepNulls">false</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the number of the last row to copy. Corresponds to the bulk insert LASTROW option."
+                          expressionType="Notify"
+                          name="BulkInsertLastRow">-1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the maximum number of syntax errors and compilation errors that can occur before the data copy operation is canceled. Each row that cannot be copied is ignored and counted as one error. Corresponds to the bulk insert MAXERRORS option."
+                          name="BulkInsertMaxErrors">-1</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies how the data to be copied is sorted. Corresponds to the bulk insert ORDER option."
+                          expressionType="Notify"
+                          name="BulkInsertOrder"></property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies that a table-level lock is acquired for the duration of the data copy operation. Corresponds to the bulk insert TABLOCK option."
+                          name="BulkInsertTablock">true</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies in seconds the amount of time the SQL Destination adapter will wait before terminating if there is no data available for insertion.  A timeout value of 0 means the SQL Destination adapter will not time out."
+                          expressionType="Notify"
+                          name="Timeout">300</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion."
+                          name="MaxInsertCommitSize">0</property>
+                      </properties>
+                      <connections>
+                        <connection
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Connections[OleDbConnection]"
+                          connectionManagerID="Package.ConnectionManagers[CM - Database]"
+                          connectionManagerRefId="Package.ConnectionManagers[CM - Database]"
+                          description="The OLE DB runtime connection used to access the database."
+                          name="OleDbConnection" />
+                      </connections>
+                      <inputs>
+                        <input
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input]"
+                          hasSideEffects="true"
+                          name="SQL Server Destination Input">
+                          <inputColumns>
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].Columns[Column 0]"
+                              cachedDataType="i8"
+                              cachedName="Column 0"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[Id]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 0]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].Columns[Column 1]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 1"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn1]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 1]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].Columns[Column 2]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 2"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn2]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 2]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].Columns[Column 3]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 3"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn3]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 3]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].Columns[Column 4]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 4"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn4]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 4]" />
+                          </inputColumns>
+                          <externalMetadataColumns
+                            isUsed="True">
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[Id]"
+                              dataType="i8"
+                              name="Id" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn1]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn1" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn2]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn2" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn3]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn3" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn4]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn4" />
+                          </externalMetadataColumns>
+                        </input>
+                      </inputs>
+                    </component>
+                    <component
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2"
+                      componentClassID="Microsoft.SQLServerDestination"
+                      contactInfo="SQL Server Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;5"
+                      description="SQL Server Destination"
+                      name="SQL_DST - Staging 2"
+                      version="5">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the column code page to use when code page information is unavailable from the data source."
+                          name="DefaultCodePage">1252</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Forces the use of the DefaultCodePage property value when describing character data."
+                          name="AlwaysUseDefaultCodePage">false</property>
+                        <property
+                          dataType="System.String"
+                          description="The name of the database object to copy data into."
+                          expressionType="Notify"
+                          name="BulkInsertTableName">[dbo].[Staging]</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies that any constraints on the destination object are checked during the data copy operation. Corresponds to the bulk insert CHECK_CONSTRAINTS option."
+                          name="BulkInsertCheckConstraints">false</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the number of the first row to copy. Corresponds to the bulk insert FIRSTROW option."
+                          expressionType="Notify"
+                          name="BulkInsertFirstRow">-1</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies that any insert triggers defined on the destination object will execute during the data copy. Corresponds to the bulk insert FIRE_TRIGGERS option."
+                          name="BulkInsertFireTriggers">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Corresponds to the bulk insert KEEPIDENTITY option."
+                          name="BulkInsertKeepIdentity">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the columns containing null will have null copied to the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                          name="BulkInsertKeepNulls">false</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the number of the last row to copy. Corresponds to the bulk insert LASTROW option."
+                          expressionType="Notify"
+                          name="BulkInsertLastRow">-1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the maximum number of syntax errors and compilation errors that can occur before the data copy operation is canceled. Each row that cannot be copied is ignored and counted as one error. Corresponds to the bulk insert MAXERRORS option."
+                          name="BulkInsertMaxErrors">-1</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies how the data to be copied is sorted. Corresponds to the bulk insert ORDER option."
+                          expressionType="Notify"
+                          name="BulkInsertOrder"></property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Specifies that a table-level lock is acquired for the duration of the data copy operation. Corresponds to the bulk insert TABLOCK option."
+                          name="BulkInsertTablock">true</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies in seconds the amount of time the SQL Destination adapter will wait before terminating if there is no data available for insertion.  A timeout value of 0 means the SQL Destination adapter will not time out."
+                          expressionType="Notify"
+                          name="Timeout">300</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion."
+                          name="MaxInsertCommitSize">0</property>
+                      </properties>
+                      <connections>
+                        <connection
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Connections[OleDbConnection]"
+                          connectionManagerID="Package.ConnectionManagers[CM - Database]"
+                          connectionManagerRefId="Package.ConnectionManagers[CM - Database]"
+                          description="The OLE DB runtime connection used to access the database."
+                          name="OleDbConnection" />
+                      </connections>
+                      <inputs>
+                        <input
+                          refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input]"
+                          hasSideEffects="true"
+                          name="SQL Server Destination Input">
+                          <inputColumns>
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].Columns[Column 0]"
+                              cachedDataType="i8"
+                              cachedName="Column 0"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[Id]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 0]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].Columns[Column 1]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 1"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn1]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 1]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].Columns[Column 2]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 2"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn2]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 2]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].Columns[Column 3]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 3"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn3]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 3]" />
+                            <inputColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].Columns[Column 4]"
+                              cachedDataType="wstr"
+                              cachedLength="500"
+                              cachedName="Column 4"
+                              externalMetadataColumnId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn4]"
+                              lineageId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output].Columns[Column 4]" />
+                          </inputColumns>
+                          <externalMetadataColumns
+                            isUsed="True">
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[Id]"
+                              dataType="i8"
+                              name="Id" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn1]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn1" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn2]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn2" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn3]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn3" />
+                            <externalMetadataColumn
+                              refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input].ExternalColumns[TextColumn4]"
+                              dataType="wstr"
+                              length="500"
+                              name="TextColumn4" />
+                          </externalMetadataColumns>
+                        </input>
+                      </inputs>
+                    </component>
+                  </components>
+                  <paths>
+                    <path
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract.Paths[Balanced Data Distributor Output 1]"
+                      endId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1.Inputs[SQL Server Destination Input]"
+                      name="Balanced Data Distributor Output 1"
+                      startId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Outputs[Balanced Data Distributor Output 1]" />
+                    <path
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract.Paths[Balanced Data Distributor Output 2]"
+                      endId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2.Inputs[SQL Server Destination Input]"
+                      name="Balanced Data Distributor Output 2"
+                      startId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Outputs[Balanced Data Distributor Output 2]" />
+                    <path
+                      refId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract.Paths[Flat File Source Output]"
+                      endId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging.Inputs[Balanced Data Distributor Input]"
+                      name="Flat File Source Output"
+                      startId="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile.Outputs[Flat File Source Output]" />
+                  </paths>
+                </pipeline>
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create IX_Staging"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{2E822207-73F7-4A3D-A0E9-861785DAB680}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Create IX_Staging"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Create_IX_Staging" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create monitoring session"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:Disabled="True"
+              DTS:DTSID="{5B8772BC-E290-49B3-A262-2BA8FB2B751C}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Create monitoring session"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:PropertyExpression
+                DTS:Name="Disable">!@[User::Monitoring_Enabled]</DTS:PropertyExpression>
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Create_Monitoring_Session" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop IX_Staging"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{A273764C-A4EB-45D5-9518-005E86B5A6D4}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Drop IX_Staging"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Drop_IX_Staging" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop monitoring session"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:Disabled="True"
+              DTS:DTSID="{B0A5FC70-32DA-4E15-9B21-E3F926FF0B93}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Drop monitoring session"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:PropertyExpression
+                DTS:Name="Disable">!@[User::Monitoring_Enabled]</DTS:PropertyExpression>
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Drop_Monitoring_Session" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Get session ID"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{C09275F9-BD31-42DF-8990-4A10666AD502}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Get session ID"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Get_Session_ID"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="0"
+                    SQLTask:DtsVariableName="User::Session_ID" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Load"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{70926DB3-6C7E-4AB4-893A-F86CFFF932A0}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Load"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Load" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Truncate in Loop"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5A51C551-3374-43B3-8B7B-FC1D9701AFAC}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="SQL - Truncate in Loop"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+                  SQLTask:SqlStmtSourceType="Variable"
+                  SQLTask:SqlStatementSource="User::SQL_Truncate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{4562AA34-B9B4-4D59-85F7-AD3EF0D4CAD3}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Load"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop IX_Staging" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{7FB574D1-E240-45F0-BF22-A554C4350B20}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create IX_Staging" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 2]"
+              DTS:CreationName=""
+              DTS:DTSID="{FD8630D5-997B-4479-AE39-ECC7FADB4507}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Get session ID"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 2"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop monitoring session" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 3]"
+              DTS:CreationName=""
+              DTS:DTSID="{162297F5-10EE-4AA9-902A-908FDEBABDC1}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop monitoring session"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 3"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create monitoring session" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 4]"
+              DTS:CreationName=""
+              DTS:DTSID="{2F922EEF-8791-475A-88AC-3073D20913C6}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create monitoring session"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 4"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 5]"
+              DTS:CreationName=""
+              DTS:DTSID="{09378C51-26BB-4EAB-9F01-79154C5514F8}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create IX_Staging"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 5"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Load" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 6]"
+              DTS:CreationName=""
+              DTS:DTSID="{77276B2B-C7BC-4892-A8C9-6CC16C70EC5F}"
+              DTS:From="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop IX_Staging"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 6"
+              DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Truncate in Loop" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\FELC - Iterate buffersizes\SQL - Get Iterations"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{047C5AD2-24D7-4CF3-BE97-D0050182C631}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Get Iterations"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7C1F6E93-963D-4784-ABBB-884D019BCE0D}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_Get_Iterations"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::Number_Of_Iterations" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\FELC - Iterate buffersizes.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{188CFAB2-EBD8-478B-B13F-4488FF700880}"
+          DTS:From="Package\FELC - Iterate buffersizes\SQL - Get Iterations"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\FELC - Iterate buffersizes\FLC - Iterations" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{36844073-26C4-420B-BD16-F734B64EA15C}"
+          DTS:ObjectName="{36844073-26C4-420B-BD16-F734B64EA15C}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::BufferSize" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ - Initialize"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{FBB129A6-20F3-421F-885D-3031F17CB9DC}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ - Initialize">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Initialize\SQL - Get Buffer sizes"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{4FC7E122-CFB0-4F3C-927F-E7089600B9A7}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Get Buffer sizes"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7C1F6E93-963D-4784-ABBB-884D019BCE0D}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_Get_BufferSizes"
+              SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::BufferSizes" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Initialize\SQL - Get monitoring bit"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{373F44F6-DE20-49B5-9052-A7B442F00737}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Get monitoring bit"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7C1F6E93-963D-4784-ABBB-884D019BCE0D}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_Get_Monitoring_Bit"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::Monitoring_Enabled" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Initialize\SQL - Init Drop IX_Staging"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3EDEE335-4A9C-48BD-8E76-8EF4FACED529}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Init Drop IX_Staging"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="2">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_Drop_IX_Staging" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Initialize\SQL - Truncate Init"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{27E42049-54F3-4D82-92A6-2C5F4D9988C8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Truncate Init"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:LoggingOptions
+            DTS:FilterKind="0" />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_Truncate" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ - Initialize\SQL - Truncate SSYSLOG"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6B5F7205-EC4B-42F7-8C05-3C424930734E}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Truncate SSYSLOG"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F1F0EEBB-0342-4E0D-9D13-B10A2EAFEEF6}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_Truncate_SSYSLOG" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{74C62B56-D5C8-41AE-8091-04607AA7B37A}"
+      DTS:From="Package\SEQ - Initialize"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\FELC - Iterate buffersizes" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5086E076-CDA0-4595-A01F-61DE455744CE}"
+      DTS:From="Package\FELC - Iterate buffersizes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT - Export Performance" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\DFT - Export Performance"
+          TopLeft="511.5,1342.16666666667" />
+        <NodeLayout
+          Size="142.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract"
+          TopLeft="51.5,313.5" />
+        <NodeLayout
+          Size="196.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create IX_Staging"
+          TopLeft="24.5000000000001,416.166666666666" />
+        <NodeLayout
+          Size="234.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Create monitoring session"
+          TopLeft="5.50000000000003,210.833333333333" />
+        <NodeLayout
+          Size="188,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop IX_Staging"
+          TopLeft="28.8333333333334,621.5" />
+        <NodeLayout
+          Size="225.333333333334,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Drop monitoring session"
+          TopLeft="10.1666666666667,108.166666666666" />
+        <NodeLayout
+          Size="180,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Get session ID"
+          TopLeft="32.8333333333333,5.49999999999993" />
+        <NodeLayout
+          Size="133.333333333334,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Load"
+          TopLeft="56.1666666666667,518.833333333333" />
+        <NodeLayout
+          Size="190.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\SQL - Truncate in Loop"
+          TopLeft="27.5000000000001,724.166666666667" />
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint]"
+          TopLeft="122.833333333333,561.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 1]"
+          TopLeft="122.833333333333,356.166666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 2]"
+          TopLeft="122.833333333333,48.1666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 3]"
+          TopLeft="122.833333333333,150.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999998"
+              Start="0,0"
+              End="0,52.4999999999998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 4]"
+          TopLeft="122.833333333333,253.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 5]"
+          TopLeft="122.833333333333,458.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations.PrecedenceConstraints[Constraint 6]"
+          TopLeft="122.833333333333,664.166666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="245.333333333334,822"
+          Size="245.333333333334,864.666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations"
+          TopLeft="5.50000000000013,108.166666666666" />
+        <NodeLayout
+          Size="174.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\SQL - Get Iterations"
+          TopLeft="40.8333333333334,5.49999999999993" />
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes.PrecedenceConstraints[Constraint]"
+          TopLeft="128.166666666667,48.1666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="256.666666666667,1028"
+          Size="256.666666666667,1070.66666666667"
+          Id="Package\FELC - Iterate buffersizes"
+          TopLeft="485.166666666667,211.5" />
+        <NodeLayout
+          Size="185.333333333334,42.6666666666667"
+          Id="Package\SEQ - Initialize\SQL - Get Buffer sizes"
+          TopLeft="5.49999999999996,5.50000000000004" />
+        <NodeLayout
+          Size="194.666666666667,42.6666666666667"
+          Id="Package\SEQ - Initialize\SQL - Get monitoring bit"
+          TopLeft="251.833333333333,5.50000000000004" />
+        <NodeLayout
+          Size="205.333333333334,42.6666666666667"
+          Id="Package\SEQ - Initialize\SQL - Init Drop IX_Staging"
+          TopLeft="507.5,5.50000000000004" />
+        <NodeLayout
+          Size="169.333333333334,42.6666666666667"
+          Id="Package\SEQ - Initialize\SQL - Truncate Init"
+          TopLeft="773.5,5.49999999999993" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\SEQ - Initialize\SQL - Truncate SSYSLOG"
+          TopLeft="1003.83333333333,5.49999999999993" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="1216,103.333333333334"
+          Size="1216,146"
+          Id="Package\SEQ - Initialize"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="613.5,151.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="613.5,1282.16666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999998"
+              Start="0,0"
+              End="0,52.4999999999998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT - Export Performance">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\DFT - Export Performance\FFD - Performance"
+          TopLeft="660.833313638966,322.499990388751" />
+        <NodeLayout
+          Size="245.333333333334,42.6666666666667"
+          Id="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance"
+          TopLeft="618.499981567264,185.999994456768" />
+        <EdgeLayout
+          Id="Package\DFT - Export Performance.Paths[OLE DB Source Output]"
+          TopLeft="743.666647603115,228.666661123435">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,93.8333292653166"
+              Start="0,0"
+              End="0,86.3333292653166">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,86.3333292653166" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT - Export Performance\SQL SRC - SSYSLog Performance">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="182.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2"
+          TopLeft="431.624991813675,214.25438592735" />
+        <NodeLayout
+          Size="148,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\BDD - Staging"
+          TopLeft="247.770828709317,108.166666666667" />
+        <NodeLayout
+          Size="182.666666666667,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1"
+          TopLeft="29.2499989382924,210.833333333334" />
+        <NodeLayout
+          Size="165.333333333334,42.6666666666667"
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\FF_SRC - Testfile"
+          TopLeft="239.020829100472,4.81578948119676" />
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract.Paths[Balanced Data Distributor Output 1]"
+          TopLeft="298.437495375984,150.833333333334">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-177.854163104358,60.0000000000003"
+              Start="0,0"
+              End="-177.854163104358,52.5000000000003">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.385026737968" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.385026737968"
+                    Point2="0,24.385026737968"
+                    Point3="-4,24.385026737968" />
+                  <mssgle:LineSegment
+                    End="-173.854163104358,24.385026737968" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-173.854163104358,24.385026737968"
+                    Point2="-177.854163104358,24.385026737968"
+                    Point3="-177.854163104358,28.385026737968" />
+                  <mssgle:LineSegment
+                    End="-177.854163104358,52.5000000000003" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-166.627647958429,29.385026737968,155.4011328125,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract.Paths[Flat File Source Output]"
+          TopLeft="321.729162238228,47.4824561478634">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.6842105188036"
+              Start="0,0"
+              End="0,53.1842105188036">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.1842105188036" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract.Paths[Balanced Data Distributor Output 2]"
+          TopLeft="345.10416204265,150.833333333334">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="177.854163104358,63.4210525940168"
+              Start="0,0"
+              End="177.854163104358,55.9210525940168">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.7754010542528" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.7754010542528"
+                    Point2="0,25.7754010542528"
+                    Point3="4,25.7754010542528" />
+                  <mssgle:LineSegment
+                    End="173.854163104358,25.7754010542528" />
+                  <mssgle:CubicBezierSegment
+                    Point1="173.854163104358,25.7754010542528"
+                    Point2="177.854163104358,25.7754010542528"
+                    Point3="177.854163104358,29.7754010542528" />
+                  <mssgle:LineSegment
+                    End="177.854163104358,55.9210525940168" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="11.040968270929,30.7754010542528,155.7722265625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 2">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\FELC - Iterate buffersizes\FLC - Iterations\DFT - Extract\SQL_DST - Staging 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
