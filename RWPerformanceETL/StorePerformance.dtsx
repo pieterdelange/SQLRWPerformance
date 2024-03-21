@@ -1,0 +1,797 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/8/2024 7:39:43 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="L1_GP"
+  DTS:CreatorName="L1_GP\Peter"
+  DTS:DTSID="{BF75C1EA-31DE-48E5-B3B5-68FA9C2171D8}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="8192"
+  DTS:ObjectName="StorePerformance"
+  DTS:PackageType="5"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{B68EEDF2-4ADC-4257-82BF-5D7929C345CF}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CM - Performance Log]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{A643061D-751A-4BFA-B6C2-1DA8D0121CA5}"
+      DTS:ObjectName="CM - Performance Log">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::Filename]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="8192"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="C:\Testfiles\Performance-Extract.dtsx-RWPerformanceDBSingleFG.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="BufferSize"
+              DTS:DTSID="{6E79D49F-8726-4D59-8080-3AF64DB7BAC1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="20"
+              DTS:DataType="130"
+              DTS:ObjectName="event"
+              DTS:DTSID="{32D9EEEE-ED17-40D9-B31F-1F2A0B68F0D1}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:MaximumWidth="30"
+              DTS:DataType="130"
+              DTS:ObjectName="source"
+              DTS:DTSID="{D2C58A02-39EA-44EB-BF5B-99CC4B1B773E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:DataType="304"
+              DTS:TextQualified="True"
+              DTS:ObjectName="StartTime"
+              DTS:DTSID="{BC664B51-34C5-41AB-BABF-5FC8313F0A27}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:DataType="2"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Iteration"
+              DTS:DTSID="{19785614-C0A7-40E6-B454-F456B6FD15EF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x003B_"
+              DTS:DataType="304"
+              DTS:TextQualified="True"
+              DTS:ObjectName="FinishTime"
+              DTS:DTSID="{C44DF0C6-79C7-4A5C-ABC7-193DDC1E8D27}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="2"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Throughputtime"
+              DTS:DTSID="{4CFB3E2A-EB10-4E18-88D5-9576C478968E}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL - Destination]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1F00E9F7-34A1-4E27-8160-2AB49AF92CE6}"
+      DTS:ObjectName="SQL - Destination">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=L1_GP\TESTPETER;Initial Catalog=Results;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package1-{1F00E9F7-34A1-4E27-8160-2AB49AF92CE6}L1_GP\TESTPETER.Results;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="C:\Users\Peter\source\repos\SQLRWPerformance\RWPerformanceETL\Config.dtsConfig"
+      DTS:ConfigurationType="1"
+      DTS:CreationName=""
+      DTS:DTSID="{C3B306F7-C981-4C68-A7CB-385FDA23D790}"
+      DTS:ObjectName="Configuration" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A72AFD9B-A190-447F-A50F-0D506DA1A1FF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Filename">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Testfiles\Performance-Extract.dtsx-RWPerformanceDBSingleFG.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DD2BAB36-406E-4B91-9610-1BE38AAF39E8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Folder">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Testfiles</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{931A5A9B-9BC2-45E0-B77F-834DD2C162F0}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{885A4A52-0F06-4046-8E43-D70FAA4B52C5}"
+        DTS:ObjectName="{885A4A52-0F06-4046-8E43-D70FAA4B52C5}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::Folder]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\Testfiles" />
+            <FEFEProperty
+              FileSpec="Performance*.csv" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container\DFT - Extract Logs"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{9199CDD7-F762-4DD4-9D72-F3B91FB07A86}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT - Extract Logs"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="DC - Scenario"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Output].Columns[Scenario]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="100"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Output].Columns[Scenario]"
+                          name="Scenario"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[LEFT](@[User::Filename],100)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">LEFT(@[User::Filename],100)</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results"
+                  componentClassID="Microsoft.FlatFileSource"
+                  contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Flat File Source"
+                  localeId="8192"
+                  name="FFS - Results"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether zero-length columns are treated as null."
+                      name="RetainNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                      name="FileNameColumnName"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[CM - Performance Log]"
+                      connectionManagerRefId="Package.ConnectionManagers[CM - Performance Log]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output]"
+                      name="Flat File Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[BufferSize]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[BufferSize]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[BufferSize]"
+                          name="BufferSize"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[event]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[event]"
+                          length="20"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[event]"
+                          name="event"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[source]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[source]"
+                          length="30"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[source]"
+                          name="source"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[StartTime]"
+                          dataType="dbTimeStamp2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[StartTime]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[StartTime]"
+                          name="StartTime"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[Iteration]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[Iteration]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[Iteration]"
+                          name="Iteration"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[FinishTime]"
+                          dataType="dbTimeStamp2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[FinishTime]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[FinishTime]"
+                          name="FinishTime"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[Throughputtime]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[Throughputtime]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[Throughputtime]"
+                          name="Throughputtime"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[BufferSize]"
+                          dataType="i4"
+                          name="BufferSize" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[event]"
+                          dataType="wstr"
+                          length="20"
+                          name="event" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[source]"
+                          dataType="wstr"
+                          length="30"
+                          name="source" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[StartTime]"
+                          dataType="dbTimeStamp2"
+                          name="StartTime" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[Iteration]"
+                          dataType="i2"
+                          name="Iteration" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[FinishTime]"
+                          dataType="dbTimeStamp2"
+                          name="FinishTime" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].ExternalColumns[Throughputtime]"
+                          dataType="i2"
+                          name="Throughputtime" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output]"
+                      isErrorOut="true"
+                      name="Flat File Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          codePage="65001"
+                          dataType="text"
+                          description="Flat File Source Error Output Column"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          name="Flat File Source Error Output Column" />
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results"
+                  componentClassID="Microsoft.SQLServerDestination"
+                  contactInfo="SQL Server Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;5"
+                  description="SQL Server Destination"
+                  name="SSD - Results"
+                  version="5">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.String"
+                      description="The name of the database object to copy data into."
+                      expressionType="Notify"
+                      name="BulkInsertTableName">[dbo].[Results]</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies that any constraints on the destination object are checked during the data copy operation. Corresponds to the bulk insert CHECK_CONSTRAINTS option."
+                      name="BulkInsertCheckConstraints">true</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the number of the first row to copy. Corresponds to the bulk insert FIRSTROW option."
+                      expressionType="Notify"
+                      name="BulkInsertFirstRow">-1</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies that any insert triggers defined on the destination object will execute during the data copy. Corresponds to the bulk insert FIRE_TRIGGERS option."
+                      name="BulkInsertFireTriggers">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Corresponds to the bulk insert KEEPIDENTITY option."
+                      name="BulkInsertKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null copied to the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="BulkInsertKeepNulls">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the number of the last row to copy. Corresponds to the bulk insert LASTROW option."
+                      expressionType="Notify"
+                      name="BulkInsertLastRow">-1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the maximum number of syntax errors and compilation errors that can occur before the data copy operation is canceled. Each row that cannot be copied is ignored and counted as one error. Corresponds to the bulk insert MAXERRORS option."
+                      name="BulkInsertMaxErrors">-1</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies how the data to be copied is sorted. Corresponds to the bulk insert ORDER option."
+                      expressionType="Notify"
+                      name="BulkInsertOrder"></property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies that a table-level lock is acquired for the duration of the data copy operation. Corresponds to the bulk insert TABLOCK option."
+                      name="BulkInsertTablock">true</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies in seconds the amount of time the SQL Destination adapter will wait before terminating if there is no data available for insertion.  A timeout value of 0 means the SQL Destination adapter will not time out."
+                      expressionType="Notify"
+                      name="Timeout">30</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion."
+                      name="MaxInsertCommitSize">0</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[SQL - Destination]"
+                      connectionManagerRefId="Package.ConnectionManagers[SQL - Destination]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input]"
+                      hasSideEffects="true"
+                      name="SQL Server Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[BufferSize]"
+                          cachedDataType="i4"
+                          cachedName="BufferSize"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[BufferSize]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[BufferSize]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[event]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="event"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[event]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[event]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[source]"
+                          cachedDataType="wstr"
+                          cachedLength="30"
+                          cachedName="source"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[source]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[source]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[StartTime]"
+                          cachedDataType="dbTimeStamp2"
+                          cachedName="StartTime"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[StartTime]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[StartTime]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[Iteration]"
+                          cachedDataType="i2"
+                          cachedName="Iteration"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[Iteration]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[Iteration]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[FinishTime]"
+                          cachedDataType="dbTimeStamp2"
+                          cachedName="FinishTime"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[FinishTime]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[FinishTime]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[Throughputtime]"
+                          cachedDataType="i2"
+                          cachedName="Throughputtime"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[Throughputtime]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output].Columns[Throughputtime]" />
+                        <inputColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].Columns[Scenario]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="Scenario"
+                          externalMetadataColumnId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[Scenario]"
+                          lineageId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Output].Columns[Scenario]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[Scenario]"
+                          dataType="wstr"
+                          length="100"
+                          name="Scenario" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[BufferSize]"
+                          dataType="i4"
+                          name="BufferSize" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[event]"
+                          dataType="wstr"
+                          length="20"
+                          name="event" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[source]"
+                          dataType="wstr"
+                          length="30"
+                          name="source" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[StartTime]"
+                          dataType="dbTimeStamp2"
+                          name="StartTime" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[Iteration]"
+                          dataType="i2"
+                          name="Iteration" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[FinishTime]"
+                          dataType="dbTimeStamp2"
+                          name="FinishTime" />
+                        <externalMetadataColumn
+                          refId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input].ExternalColumns[Throughputtime]"
+                          dataType="i2"
+                          name="Throughputtime" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Foreach Loop Container\DFT - Extract Logs.Paths[Derived Column Output]"
+                  endId="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results.Inputs[SQL Server Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Foreach Loop Container\DFT - Extract Logs.Paths[Flat File Source Output]"
+                  endId="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario.Inputs[Derived Column Input]"
+                  name="Flat File Source Output"
+                  startId="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results.Outputs[Flat File Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{C6DF070C-EA15-49A2-90E7-43A7766735C8}"
+          DTS:ObjectName="{C6DF070C-EA15-49A2-90E7-43A7766735C8}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::Filename" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="169.333333333334,42.6666666666667"
+          Id="Package\Foreach Loop Container\DFT - Extract Logs"
+          TopLeft="60.1666596258682,35.9473673016907" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="305.333333333334,134"
+          Size="305.333333333334,176.666666666667"
+          Id="Package\Foreach Loop Container"
+          TopLeft="97.4999956414105,23.263157639312" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Foreach Loop Container\DFT - Extract Logs">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results"
+          TopLeft="294.87498706393,253.938596017941" />
+        <NodeLayout
+          Size="145.333333333334,42.6666666666667"
+          Id="Package\Foreach Loop Container\DFT - Extract Logs\FFS - Results"
+          TopLeft="295.541653730597,48.6052626846075" />
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Foreach Loop Container\DFT - Extract Logs\DC - Scenario"
+          TopLeft="294.87498706393,151.271929351274" />
+        <EdgeLayout
+          Id="Package\Foreach Loop Container\DFT - Extract Logs.Paths[Flat File Source Output]"
+          TopLeft="368.208320397263,91.2719293512742">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Loop Container\DFT - Extract Logs.Paths[Derived Column Output]"
+          TopLeft="368.208320397263,193.938596017941">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach Loop Container\DFT - Extract Logs\SSD - Results">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

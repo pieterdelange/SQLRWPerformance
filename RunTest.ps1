@@ -33,8 +33,32 @@ $ErrorActionPreference = "STOP"
 
 #Start 
 #Environment variables.
-$SQLInstanceName = 'L1_GP\TESTPETER' 
 $SQLPackageLocation = "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\sqlpackage.exe"
+$ETLProjectFoldername = 'RWPerformanceETL'
+$ETLConfigurationFilename = 'Config.dtsConfig'
+$ETLProjectfolderLocation = Join-Path -Path $PSScriptRoot -ChildPath $ETLProjectFoldername
+$ETLConfigurationFilelocation = Join-Path $ETLProjectfolderLocation -ChildPath $ETLConfigurationFilename
+
+#Load DtsConfigFile in memory
+[xml]$ETLConfigurationFileXML = Get-Content -Encoding UTF8 -Path $ETLConfigurationFilelocation
+$NameSpaceManager = [System.Xml.XmlNamespacemanager]::new($ETLConfigurationFileXML.NameTable)
+$NameSpaceManager.AddNameSpace('dts', 'www.microsoft.com/SqlServer/Dts')
+
+#Find filelocation
+$XPathQuery = '/DTSConfiguration/Configuration'
+$ETLConfigurationFileXML.SelectNodes($XPathQuery, $NameSpaceManager) | % {
+    $Element = $_
+    if ($Element.Path -eq '\Package.Variables[User::Folder].Properties[Value]') {
+        $FullPathToFolderToCreate = $Element.ConfiguredValue
+    }
+    if ($Element.Path -eq '\Package.Variables[User::ServerName].Properties[Value]') {
+        $SQLInstanceName = $Element.ConfiguredValue
+    }
+}
+
+Write-Host "Directory for testfile: $($FullPathToFolderToCreate)"
+
+$TestFileLocation = $FullPathToFolderToCreate
 #Environment variables.
 #End 
 
@@ -51,7 +75,6 @@ $ConfigurationDatabasePublishXMLLocation = Join-Path -Path $ConfigurationDatabas
 
 $SSISLocation = Join-Path -Path $PSScriptRoot -ChildPath "RWPerformanceETL"
 
-$TestFileLocation = 'C:\Testfiles'
 $PerformanceLogLocation = Join-Path -Path $TestFileLocation -ChildPath 'Performance.csv'
 
 Write-Verbose "DatabaseNames: $($DatabaseNames)"
@@ -77,6 +100,7 @@ SELECT  S.[Id]
       , S.[SSISPackage]
       , S.[DatabaseProject]
   FROM [Configuration].[dbo].[Scenarios] S
+  WHERE S.[Id] > 11
 " -ServerInstance $SQLInstanceName -Database $ConfigurationDatabaseName
 
 #Run the scenarios

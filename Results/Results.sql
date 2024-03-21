@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[Results]
 (
-	[Scenario] VARCHAR(50),
+	[Scenario] NVARCHAR(100),
 	[BufferSize] INT NOT NULL, 
-    [event] VARCHAR(15) NOT NULL,
-	[source] VARCHAR(15) NOT NULL,
+    [event] NVARCHAR(20) NOT NULL,
+	[source] NVARCHAR(30) NOT NULL,
 	[StartTime] DATETIME2(0) NOT NULL,
 	[Iteration] SMALLINT NOT NULL,
 	[FinishTime] DATETIME2(0) NOT NULL,

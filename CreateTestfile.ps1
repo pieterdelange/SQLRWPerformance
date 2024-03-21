@@ -1,14 +1,29 @@
-﻿#Delete existing testfiles directory and create a new one
-$FoldernameToCreate = 'Testfiles'
-$Root = 'C:'
-$FullPathToFolderToCreate = Join-Path -Path $Root -ChildPath $FoldernameToCreate
-Write-Host "Directory to create: $($FullPathToFolderToCreate)"
+﻿#Get configuration
+$ETLProjectFoldername = 'RWPerformanceETL'
+$ETLConfigurationFilename = 'Config.dtsConfig'
+$ETLProjectfolderLocation = Join-Path -Path $PSScriptRoot -ChildPath $ETLProjectFoldername
+$ETLConfigurationFilelocation = Join-Path $ETLProjectfolderLocation -ChildPath $ETLConfigurationFilename
 
-if(Test-Path -path  $FullPathToFolderToCreate) {
-    Remove-Item $FullPathToFolderToCreate
+#Load DtsConfigFile in memory
+[xml]$ETLConfigurationFileXML = Get-Content -Encoding UTF8 $ETLConfigurationFilelocation
+$NameSpaceManager = [System.Xml.XmlNamespacemanager]::new($ETLConfigurationFileXML.NameTable)
+$NameSpaceManager.AddNameSpace('dts', 'www.microsoft.com/SqlServer/Dts')
+$NameSpaceManager
+
+#Find filelocation
+$XPathQuery = '/DTSConfiguration/Configuration'
+$ETLConfigurationFileXML.SelectNodes($XPathQuery, $NameSpaceManager) | % {
+    $Element = $_
+    if ($Element.Path -eq '\Package.Variables[User::Folder].Properties[Value]') {
+        $FullPathToFolderToCreate = $Element.ConfiguredValue
+    }
 }
 
-New-Item -ItemType Directory -Path $FullPathToFolderToCreate 
+Write-Host "Directory to create: $($FullPathToFolderToCreate)"
+
+if ((Test-Path $FullPathToFolderToCreate) -ne $true) {
+    New-Item -ItemType Directory -Path $FullPathToFolderToCreate 
+}
 
 #Let's write some content to a file in our new directory. 
 $FileNameToWriteTo = "Test.csv"
@@ -18,7 +33,7 @@ Write-Host "Path to write to: $($PathToWriteTo)"
 
 #Determine nr of lines to write
 [bigint]$counter = 0
-[bigint]$NrOfLinesToWrite = 10000000
+[bigint]$NrOfLinesToWrite = 20000000
 
 #$sw = [io.file]::AppendText($PathToWriteTo);
 $sw =[System.IO.StreamWriter] $PathToWriteTo;

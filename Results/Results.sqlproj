@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Results.sql" />
+    <Build Include="Performance.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Results.publish.xml" />

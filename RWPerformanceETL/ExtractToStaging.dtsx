@@ -6,13 +6,14 @@
   DTS:CreatorComputerName="L1_GP"
   DTS:CreatorName="L1_GP\Peter"
   DTS:DTSID="{E02F4A07-7858-4961-BF4A-D23DB5DA7EB7}"
+  DTS:EnableConfig="True"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.5397.1"
   DTS:LocaleID="8192"
   DTS:ObjectName="ExtractToStagingIndex"
   DTS:PackageType="5"
-  DTS:VersionBuild="112"
-  DTS:VersionGUID="{5C54A425-8C66-42EA-B486-F2CF7C256579}">
+  DTS:VersionBuild="116"
+  DTS:VersionGUID="{A5171E9C-BFE8-4E4C-9299-342772A20A49}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -22,7 +23,7 @@
       DTS:DTSID="{3C98EA3A-A8DE-4FFB-B622-7F0972CCED16}"
       DTS:ObjectName="CM - Configuration">
       <DTS:PropertyExpression
-        DTS:Name="ServerName">@[$Package::ServerName]</DTS:PropertyExpression>
+        DTS:Name="ServerName">@[User::ServerName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -36,7 +37,7 @@
       DTS:DTSID="{AC467FB9-C2E5-4A80-B98D-4913165368BF}"
       DTS:ObjectName="CM - Database">
       <DTS:PropertyExpression
-        DTS:Name="ServerName">@[$Package::ServerName]</DTS:PropertyExpression>
+        DTS:Name="ServerName">@[User::ServerName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -49,6 +50,8 @@
       DTS:CreationName="FLATFILE"
       DTS:DTSID="{42473F01-452B-4EF5-B840-A430939B591A}"
       DTS:ObjectName="FF_CM - Performance">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::PerformanceOutputFileName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:Format="Delimited"
@@ -132,6 +135,8 @@
       DTS:CreationName="FLATFILE"
       DTS:DTSID="{F41AECC3-4D4C-4E8B-AEFC-359DC7CDE777}"
       DTS:ObjectName="FF_CM - Source">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::SourceFileName]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:Format="Delimited"
@@ -191,6 +196,14 @@
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="C:\Users\Peter\source\repos\SQLRWPerformance\RWPerformanceETL\Config.dtsConfig"
+      DTS:ConfigurationType="1"
+      DTS:CreationName=""
+      DTS:DTSID="{C4616010-4A3E-4F21-B250-B86FDDE529FF}"
+      DTS:ObjectName="Configuration" />
+  </DTS:Configurations>
   <DTS:LogProviders>
     <DTS:LogProvider
       DTS:ConfigString="CM - Database"
@@ -203,17 +216,6 @@
       </DTS:ObjectData>
     </DTS:LogProvider>
   </DTS:LogProviders>
-  <DTS:PackageParameters>
-    <DTS:PackageParameter
-      DTS:CreationName=""
-      DTS:DataType="8"
-      DTS:DTSID="{37C4AE56-F44C-4E1E-A902-B54DA54C7428}"
-      DTS:ObjectName="ServerName">
-      <DTS:Property
-        DTS:DataType="8"
-        DTS:Name="ParameterValue">localhost\TESTPETER</DTS:Property>
-    </DTS:PackageParameter>
-  </DTS:PackageParameters>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -241,6 +243,15 @@
           </SOAP-ENV:Body>
         </SOAP-ENV:Envelope>
       </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{69B50072-2FB0-42F2-8DA8-EAA5F07C3902}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Folder">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Testfiles</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -273,6 +284,17 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{FD0A4DB3-499F-4F8A-BB38-F2726E3D9009}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Folder] + &quot;\\Performance.csv&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PerformanceOutputFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Testfiles\Performance.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{0F30E842-E3C3-4EC8-9684-6734DD8D422C}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
@@ -282,12 +304,32 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
+      DTS:DTSID="{98BFE56F-7040-41ED-9126-FF052830FA5A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ServerName">
+      <DTS:VariableValue
+        DTS:DataType="8">localhost\TESTPETER</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
       DTS:DTSID="{79AF7992-7A80-4CA3-8E11-28AC17DF1864}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="Session_ID">
       <DTS:VariableValue
         DTS:DataType="2">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{62F12D05-631C-45A6-AA4C-88F4FD3B0BAF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::Folder] + &quot;\\Test.csv&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Testfiles\Test.csv</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -648,7 +690,7 @@
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -1523,7 +1565,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="SQL - Get Buffer sizes"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="4">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1569,7 +1611,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="SQL - Init Drop IX_Staging"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="4">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -1587,7 +1629,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="SQL - Truncate Init"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:LoggingOptions
             DTS:FilterKind="0" />
@@ -1607,7 +1649,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="SQL - Truncate SSYSLOG"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
