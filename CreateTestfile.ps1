@@ -59,4 +59,4 @@ $sw.Dispose()
 $StopWatch.Stop()
 $Minutes = $StopWatch.Elapsed.TotalMinutes
 
-$StopWatch.Elapsed.Seconds
+$StopWatch.Elapsed.TotalSeconds

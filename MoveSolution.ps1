@@ -16,10 +16,13 @@ $ETLConfigurationFileXML.SelectNodes($XPathQuery, $NameSpaceManager) | % {
     $Element = $_
     if ($Element.Path -eq '\Package.Variables[User::Folder].Properties[Value]') {
         $FullPathToFolderToCreate = $Element.ConfiguredValue
+    } elseif ($Element.Path -eq '\Package.Variables[User::ServerName].Properties[Value]') {
+        $ServerName = = $Element.ConfiguredValue
     }
 }
 
 Write-Host "Directory for testfile: $($FullPathToFolderToCreate)"
+Write-Host "Servername: $($ServerName)"
 
 #Loop through all etl packages and set configuration file location
 $XPathQueryDTSX = '/dts:Executable/dts:Configurations/dts:Configuration'
@@ -37,3 +40,21 @@ Get-ChildItem $ETLProjectfolderLocation -Filter '*.dtsx' | % {
     }
     Write-Host "Package : $($Package) updated."
 }
+
+#Loop through all database publish files and set correct connectionstring
+$XPathQueryDTSX = '/dts:Executable/dts:Configurations/dts:Configuration'
+Get-ChildItem $ETLProjectfolderLocation -Filter '*.dtsx' | % {
+    $Package = $_.FullName
+    Write-Host "Package to update: $($Package)."
+
+    [xml]$ETLPackageXML = Get-Content -Encoding UTF8 -Path $Package
+    $NameSpaceManager = [System.Xml.XmlNamespacemanager]::new($ETLPackageXML.NameTable)
+    $NameSpaceManager.AddNameSpace('dts', 'www.microsoft.com/SqlServer/Dts')
+    $ETLPackageXML.SelectNodes($XPathQueryDTSX, $NameSpaceManager) | % {
+        $Element = $_
+        $Element.SetAttribute('DTS:ConfigurationString', $ETLConfigurationFilelocation)
+        $ETLPackageXML.Save($Package)
+    }
+    Write-Host "Package : $($Package) updated."
+}
+
