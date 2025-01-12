@@ -17,7 +17,7 @@ $ETLConfigurationFileXML.SelectNodes($XPathQuery, $NameSpaceManager) | % {
     if ($Element.Path -eq '\Package.Variables[User::Folder].Properties[Value]') {
         $FullPathToFolderToCreate = $Element.ConfiguredValue
     } elseif ($Element.Path -eq '\Package.Variables[User::ServerName].Properties[Value]') {
-        $ServerName = = $Element.ConfiguredValue
+        $ServerName = $Element.ConfiguredValue
     }
 }
 
@@ -42,19 +42,16 @@ Get-ChildItem $ETLProjectfolderLocation -Filter '*.dtsx' | % {
 }
 
 #Loop through all database publish files and set correct connectionstring
-$XPathQueryPublishXML = 'Project/PropertyGroup'
 $PublishConnectionString = "Data Source=$($ServerName);Integrated Security=True;Persist Security Info=False;Pooling=False;Multiple Active Result Sets=False;Connect Timeout=60;Encrypt=False;Trust Server Certificate=False;Command Timeout=0"
 Get-ChildItem $PSScriptRoot -Recurse -Filter '*.publish.xml' | % {
     $PublishFile = $_.FullName
     Write-Host "Publish file to update: $($PublishFile)."
 
-    [xml]$PublishFileXML = Get-Content -Encoding UTF8 -Path $Package
+    [xml]$PublishFileXML = Get-Content -Encoding UTF8 -Path $PublishFile
     $NameSpaceManager = [System.Xml.XmlNamespacemanager]::new($PublishFileXML.NameTable)
-    $PublishFileXML.SelectNodes($XPathQueryPublishXML, $NameSpaceManager) | % {
-        $Element = $_
-        $Element.SetAttribute('TargetConnectionString', $PublishConnectionString)
-        $PublishFileXML.Save($Package)
-    }
+    $PublishFileXML.Project.PropertyGroup.TargetConnectionString = $PublishConnectionString
+    $PublishFileXML.Save($PublishFileXML)
+
     Write-Host "Publish file : $($PublishFile) updated."
 }
 

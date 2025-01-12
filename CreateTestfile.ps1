@@ -57,6 +57,5 @@ $sw.Close()
 $sw.Dispose()
 
 $StopWatch.Stop()
-$Minutes = $StopWatch.Elapsed.TotalMinutes
 
-$StopWatch.Elapsed.TotalSeconds
+Write-Host "Total write time: $($StopWatch.Elapsed.TotalSeconds)"

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="2/2/2024 3:00:15 PM"
@@ -12,8 +12,8 @@
   DTS:LocaleID="8192"
   DTS:ObjectName="ExtractToStaging2Flows"
   DTS:PackageType="5"
-  DTS:VersionBuild="119"
-  DTS:VersionGUID="{2E177A11-0CF6-444C-844B-ACE94E749A9D}">
+  DTS:VersionBuild="120"
+  DTS:VersionGUID="{448C388F-37F7-4164-8B55-EDA9BD30D8E3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -424,7 +424,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="SQL_Load">
       <DTS:VariableValue
-        DTS:DataType="8">UPDATE STATISTICS [dbo].[Staging] WITH FULLSCAN ;     INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]</DTS:VariableValue>
+        DTS:DataType="8">INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -433,7 +433,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="SQL_Load_Without_Monitoring">
       <DTS:VariableValue
-        DTS:DataType="8">UPDATE STATISTICS [dbo].[Staging] WITH FULLSCAN ;     INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]</DTS:VariableValue>
+        DTS:DataType="8">INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -442,7 +442,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="SQL_Load_With_Monitoring">
       <DTS:VariableValue
-        DTS:DataType="8">UPDATE STATISTICS [dbo].[Staging] WITH FULLSCAN ;     ALTER EVENT SESSION MonitorWaits ON SERVER STATE = START    INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]     ALTER EVENT SESSION MonitorWaits ON SERVER STATE = STOP</DTS:VariableValue>
+        DTS:DataType="8">ALTER EVENT SESSION MonitorWaits ON SERVER STATE = START    INSERT INTO [dbo].[Store] WITH (TABLOCK)     	SELECT  [Id],   [TextColumn1],  [TextColumn2],  [TextColumn3],  [TextColumn4]    	FROM [dbo].[Staging]     ALTER EVENT SESSION MonitorWaits ON SERVER STATE = STOP</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
