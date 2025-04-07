@@ -50,7 +50,7 @@ Get-ChildItem $PSScriptRoot -Recurse -Filter '*.publish.xml' | % {
     [xml]$PublishFileXML = Get-Content -Encoding UTF8 -Path $PublishFile
     $NameSpaceManager = [System.Xml.XmlNamespacemanager]::new($PublishFileXML.NameTable)
     $PublishFileXML.Project.PropertyGroup.TargetConnectionString = $PublishConnectionString
-    $PublishFileXML.Save($PublishFileXML)
+    $PublishFileXML.Save($PublishFile)
 
     Write-Host "Publish file : $($PublishFile) updated."
 }
